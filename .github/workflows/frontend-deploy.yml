@@ -3,7 +3,7 @@ name: Deploy Frontend
 on:
   push:
     branches:
-      - deploy
+      - main
     paths:
       - 'front_despacho/**'
       - '.github/workflows/**'
