@@ -15,7 +15,7 @@ jobs:
         with:
           host: ${{ secrets.EC2_HOST }}
           username: ec2-user
-          key: ${{ secrets.EC2_KEY }}
+          key: ${{ secrets.EC2_SSH_KEY }}
           script: |
 
             ssh -i /home/ec2-user/PruebaN2.pem ec2-user@10.0.6.83 << 'EOF'
