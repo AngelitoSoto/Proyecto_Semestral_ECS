@@ -1,66 +1,31 @@
-name: Deploy Backend
-#ola
+name: Deploy Backend Private EC2
+
 on:
   push:
     branches:
       - main
-    paths:
-      - 'back-Ventas_SpringBoot/**'
-      - 'back-Despachos_SpringBoot/**'
-      - 'docker-compose.yml'
-      - '.github/workflows/**'
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Login Docker Hub
-        uses: docker/login-action@v3
+      - name: Deploy Backend through Front EC2
+        uses: appleboy/ssh-action@v1.0.3
         with:
-          username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
+          host: ${{ secrets.FRONT_HOST }}
+          username: ec2-user
+          key: ${{ secrets.EC2_KEY }}
+          script: |
 
-      - name: Build ventas image
-        run: |
-          docker build -t ${{ secrets.DOCKER_USERNAME }}/ventas-api:latest ./back-Ventas_SpringBoot/Springboot-API-REST
+            ssh -i /home/ec2-user/PruebaN2.pem ec2-user@10.0.6.83 << 'EOF'
 
-      - name: Push ventas image
-        run: |
-          docker push ${{ secrets.DOCKER_USERNAME }}/ventas-api:latest
+            cd /home/ec2-user/app
 
-      - name: Build despachos image
-        run: |
-          docker build -t ${{ secrets.DOCKER_USERNAME }}/despachos-api:latest ./back-Despachos_SpringBoot/Springboot-API-REST-DESPACHO
+            sudo docker compose pull
 
-      - name: Push despachos image
-        run: |
-          docker push ${{ secrets.DOCKER_USERNAME }}/despachos-api:latest
+            sudo docker compose down
 
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v4
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
-          aws-region: ${{ secrets.AWS_REGION }}
+            sudo docker compose up -d
 
-      - name: Deploy in EC2 with SSM
-        run: |
-          aws ssm send-command \
-            --instance-ids "${{ secrets.BACKEND_INSTANCE_ID }}" \
-            --document-name "AWS-RunShellScript" \
-            --parameters commands='[
-              "docker pull angelitosoto20/ventas-api:latest",
-              "docker pull angelitosoto20/despachos-api:latest",
-              "docker stop ventas-api || true",
-              "docker rm ventas-api || true",
-              "docker stop despachos-api || true",
-              "docker rm despachos-api || true",
-              "docker run -d --name ventas-api -p 8080:8080 TU_USUARIO/ventas-api:latest",
-              "docker run -d --name despachos-api -p 8081:8081 TU_USUARIO/despachos-api:latest"
-            ]' \
-            --region ${{ secrets.AWS_REGION }}
+            EOF
