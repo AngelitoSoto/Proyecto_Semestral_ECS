@@ -53,10 +53,14 @@ jobs:
           aws ssm send-command \
             --instance-ids "${{ secrets.BACKEND_INSTANCE_ID }}" \
             --document-name "AWS-RunShellScript" \
-            --parameters 'commands=[
-              "cd /home/ec2-user/app",
-              "docker compose pull",
-              "docker compose up -d"
+            --parameters commands='[
+              "docker pull angelitosoto20/ventas-api:latest",
+              "docker pull angelitosoto20/despachos-api:latest",
+              "docker stop ventas-api || true",
+              "docker rm ventas-api || true",
+              "docker stop despachos-api || true",
+              "docker rm despachos-api || true",
+              "docker run -d --name ventas-api -p 8080:8080 TU_USUARIO/ventas-api:latest",
+              "docker run -d --name despachos-api -p 8081:8081 TU_USUARIO/despachos-api:latest"
             ]' \
-            --comment "Deploy backend" \
             --region ${{ secrets.AWS_REGION }}
