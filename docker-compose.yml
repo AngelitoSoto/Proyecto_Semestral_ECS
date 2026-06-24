@@ -26,6 +26,10 @@ services:
       DB_PASSWORD: root
     ports:
       - "8080:8080"
+    networks:
+      default:
+        aliases:
+          - ventas.citt.local
 
   despachos:
     build:
@@ -41,6 +45,10 @@ services:
       DB_PASSWORD: root
     ports:
       - "8081:8081"
+    networks:
+      default:
+        aliases:
+          - despachos.citt.local
 
   frontend:
     build:
@@ -54,3 +62,7 @@ services:
 
 volumes:
   mysql_data:
+
+networks:
+  default:
+

@@ -1,0 +1,140 @@
+{
+  "family": "semestral-app",
+  "networkMode": "awsvpc",
+  "requiresCompatibilities": [
+    "FARGATE"
+  ],
+  "cpu": "1024",
+  "memory": "2048",
+  "executionRoleArn": "arn:aws:iam::549642143837:role/LabRole",
+  "taskRoleArn": "arn:aws:iam::549642143837:role/LabRole",
+  "containerDefinitions": [
+    {
+      "name": "mysql",
+      "image": "mysql:8.0",
+      "essential": true,
+      "portMappings": [
+        {
+          "containerPort": 3306,
+          "hostPort": 3306,
+          "protocol": "tcp"
+        }
+      ],
+      "environment": [
+        { "name": "MYSQL_ROOT_PASSWORD", "value": "root" },
+        { "name": "MYSQL_DATABASE", "value": "semestraldb" }
+      ],
+      "healthCheck": {
+        "command": ["CMD-SHELL", "mysqladmin ping -h localhost -uroot -proot"],
+        "interval": 5,
+        "timeout": 5,
+        "retries": 3,
+        "startPeriod": 15
+      },
+      "logConfiguration": {
+        "logDriver": "awslogs",
+        "options": {
+          "awslogs-group": "/ecs/semestral-app",
+          "awslogs-region": "us-east-1",
+          "awslogs-stream-prefix": "mysql"
+        }
+      }
+    },
+    {
+      "name": "ventas",
+      "image": "549642143837.dkr.ecr.us-east-1.amazonaws.com/semestral-ventas:latest",
+      "essential": true,
+      "portMappings": [
+        {
+          "containerPort": 8080,
+          "hostPort": 8080,
+          "protocol": "tcp"
+        }
+      ],
+      "environment": [
+        { "name": "DB_ENDPOINT", "value": "127.0.0.1" },
+        { "name": "DB_PORT", "value": "3306" },
+        { "name": "DB_NAME", "value": "semestraldb" },
+        { "name": "DB_USERNAME", "value": "root" },
+        { "name": "DB_PASSWORD", "value": "root" }
+      ],
+      "dependsOn": [
+        {
+          "containerName": "mysql",
+          "condition": "HEALTHY"
+        }
+      ],
+      "logConfiguration": {
+        "logDriver": "awslogs",
+        "options": {
+          "awslogs-group": "/ecs/semestral-app",
+          "awslogs-region": "us-east-1",
+          "awslogs-stream-prefix": "ventas"
+        }
+      }
+    },
+    {
+      "name": "despachos",
+      "image": "549642143837.dkr.ecr.us-east-1.amazonaws.com/semestral-despachos:latest",
+      "essential": true,
+      "portMappings": [
+        {
+          "containerPort": 8081,
+          "hostPort": 8081,
+          "protocol": "tcp"
+        }
+      ],
+      "environment": [
+        { "name": "DB_ENDPOINT", "value": "127.0.0.1" },
+        { "name": "DB_PORT", "value": "3306" },
+        { "name": "DB_NAME", "value": "semestraldb" },
+        { "name": "DB_USERNAME", "value": "root" },
+        { "name": "DB_PASSWORD", "value": "root" }
+      ],
+      "dependsOn": [
+        {
+          "containerName": "mysql",
+          "condition": "HEALTHY"
+        }
+      ],
+      "logConfiguration": {
+        "logDriver": "awslogs",
+        "options": {
+          "awslogs-group": "/ecs/semestral-app",
+          "awslogs-region": "us-east-1",
+          "awslogs-stream-prefix": "despachos"
+        }
+      }
+    },
+    {
+      "name": "frontend",
+      "image": "549642143837.dkr.ecr.us-east-1.amazonaws.com/semestral-frontend:latest",
+      "essential": true,
+      "portMappings": [
+        {
+          "containerPort": 80,
+          "hostPort": 80,
+          "protocol": "tcp"
+        }
+      ],
+      "dependsOn": [
+        {
+          "containerName": "ventas",
+          "condition": "START"
+        },
+        {
+          "containerName": "despachos",
+          "condition": "START"
+        }
+      ],
+      "logConfiguration": {
+        "logDriver": "awslogs",
+        "options": {
+          "awslogs-group": "/ecs/semestral-app",
+          "awslogs-region": "us-east-1",
+          "awslogs-stream-prefix": "frontend"
+        }
+      }
+    }
+  ]
+}
