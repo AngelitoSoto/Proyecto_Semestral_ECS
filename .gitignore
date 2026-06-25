@@ -10,3 +10,6 @@ terraform/.terraform.lock.hcl
 # OS files
 .DS_Store
 Thumbs.db
+
+# Ignore entire local terraform directory
+terraform/
