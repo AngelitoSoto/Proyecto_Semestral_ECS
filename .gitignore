@@ -13,3 +13,6 @@ Thumbs.db
 
 # Ignore entire local terraform directory
 terraform/
+
+# Ignore local credentials updater script (prevents token leakage)
+actualizar_credenciales.py
