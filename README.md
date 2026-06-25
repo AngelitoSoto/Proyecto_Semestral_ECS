@@ -10,7 +10,7 @@ El proyecto integra:
 
 ---
 
-## ☁️ Arquitectura Cloud (AWS)
+## Arquitectura Cloud (AWS)
 
 La infraestructura fue desplegada en AWS utilizando las mejores prácticas de disponibilidad y seguridad corporativa, siendo 100% compatible con las políticas de **AWS Academy Learned Labs** (ejecutándose bajo el rol `LabRole`).
 
@@ -46,7 +46,7 @@ graph TD
 
 ---
 
-## 🛠️ Estructura del Proyecto
+##  Estructura del Proyecto
 
 * `/front_despacho`: Código fuente del frontend (Vite + React) y su archivo `Dockerfile`.
 * `/back-Ventas_SpringBoot`: Microservicio de gestión de ventas y su `Dockerfile`.
@@ -56,7 +56,7 @@ graph TD
 
 ---
 
-## 🚀 Pipeline de CI/CD (GitHub Actions)
+##  Pipeline de CI/CD (GitHub Actions)
 
 El flujo de integración y entrega continua (CI/CD) automatiza la publicación de la aplicación ante cualquier cambio:
 1. **Trigger**: Se activa con cualquier push en la rama `main`.
@@ -66,7 +66,7 @@ El flujo de integración y entrega continua (CI/CD) automatiza la publicación d
 
 ---
 
-## 💻 Ejecución Local (Docker Compose)
+##  Ejecución Local (Docker Compose)
 
 Para levantar y probar toda la arquitectura de forma local en tu máquina de desarrollo, ejecuta en la raíz del proyecto:
 
@@ -82,7 +82,7 @@ docker compose up --build -d
 
 ---
 
-## 🔗 Operación en Producción (AWS)
+##  Operación en Producción (AWS)
 
 ### Enlaces de Acceso
 * **URL de Acceso Web (ALB)**: [http://semestral-alb-1678082745.us-east-1.elb.amazonaws.com](http://semestral-alb-1678082745.us-east-1.elb.amazonaws.com)
