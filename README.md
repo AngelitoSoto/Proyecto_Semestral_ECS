@@ -1,6 +1,6 @@
 # Sistema de Gestión de Ventas y Despachos (Orquestación en AWS ECS Fargate)
 
-Este repositorio contiene la arquitectura de microservicios y la configuración de automatización para la solución cloud de la empresa **Innovatech Chile**, desplegada de forma elástica y con alta disponibilidad en **AWS ECS (Elastic Container Service) Fargate** bajo una topología de red segura en la región **`us-east-1`** (N. Virginia). xd
+Este repositorio contiene la arquitectura de microservicios y la configuración de automatización para la solución cloud de la empresa **Innovatech Chile**, desplegada de forma elástica y con alta disponibilidad en **AWS ECS (Elastic Container Service) Fargate** bajo una topología de red segura en la región **`us-east-1`** (N. Virginia). 
 
 El proyecto integra:
 1. **Frontend**: React + Vite (Nginx).
