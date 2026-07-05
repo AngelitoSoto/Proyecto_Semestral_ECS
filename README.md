@@ -85,7 +85,7 @@ docker compose up --build -d
 ##  Operación en Producción (AWS)
 
 ### Enlaces de Acceso
-* **URL de Acceso Web (ALB)**: [http://semestral-alb-1678082745.us-east-1.elb.amazonaws.com](http://semestral-alb-1678082745.us-east-1.elb.amazonaws.com)
+* **URL de Acceso Web (ALB)**: [http://semestral-alb-1495860592.us-east-1.elb.amazonaws.com](http://semestral-alb-1495860592.us-east-1.elb.amazonaws.com)
 * **API Ventas**: Redirige al puerto `8080` de la tarea de Fargate a través de `/api/ventas`.
 * **API Despachos**: Redirige al puerto `8081` de la tarea de Fargate a través de `/api/despachos`.
 
@@ -93,7 +93,7 @@ docker compose up --build -d
 
 #### 1. Crear una Venta (POST):
 ```bash
-curl -X POST http://semestral-alb-1678082745.us-east-1.elb.amazonaws.com/api/ventas \
+curl -X POST http://semestral-alb-1495860592.us-east-1.elb.amazonaws.com/api/ventas \
   -H "Content-Type: application/json" \
   -d '{
     "direccionCompra": "Av. Apoquindo 4500, Las Condes",
@@ -105,12 +105,12 @@ curl -X POST http://semestral-alb-1678082745.us-east-1.elb.amazonaws.com/api/ven
 
 #### 2. Consultar Ventas (GET):
 ```bash
-curl http://semestral-alb-1678082745.us-east-1.elb.amazonaws.com/api/ventas
+curl http://semestral-alb-1495860592.us-east-1.elb.amazonaws.com/api/ventas
 ```
 
 #### 3. Crear un Despacho (POST):
 ```bash
-curl -X POST http://semestral-alb-1678082745.us-east-1.elb.amazonaws.com/api/despachos \
+curl -X POST http://semestral-alb-1495860592.us-east-1.elb.amazonaws.com/api/despachos \
   -H "Content-Type: application/json" \
   -d '{
     "fechaDespacho": "2026-06-25",
