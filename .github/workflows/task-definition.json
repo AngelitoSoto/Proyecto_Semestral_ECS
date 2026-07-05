@@ -6,8 +6,8 @@
   ],
   "cpu": "1024",
   "memory": "2048",
-  "executionRoleArn": "arn:aws:iam::549642143837:role/LabRole",
-  "taskRoleArn": "arn:aws:iam::549642143837:role/LabRole",
+  "executionRoleArn": "arn:aws:iam::054593365128:role/LabRole",
+  "taskRoleArn": "arn:aws:iam::054593365128:role/LabRole",
   "containerDefinitions": [
     {
       "name": "mysql",
@@ -42,7 +42,7 @@
     },
     {
       "name": "ventas",
-      "image": "549642143837.dkr.ecr.us-east-1.amazonaws.com/semestral-ventas:latest",
+      "image": "054593365128.dkr.ecr.us-east-1.amazonaws.com/semestral-ventas:latest",
       "essential": true,
       "portMappings": [
         {
@@ -75,7 +75,7 @@
     },
     {
       "name": "despachos",
-      "image": "549642143837.dkr.ecr.us-east-1.amazonaws.com/semestral-despachos:latest",
+      "image": "054593365128.dkr.ecr.us-east-1.amazonaws.com/semestral-despachos:latest",
       "essential": true,
       "portMappings": [
         {
@@ -108,7 +108,7 @@
     },
     {
       "name": "frontend",
-      "image": "549642143837.dkr.ecr.us-east-1.amazonaws.com/semestral-frontend:latest",
+      "image": "054593365128.dkr.ecr.us-east-1.amazonaws.com/semestral-frontend:latest",
       "essential": true,
       "portMappings": [
         {
